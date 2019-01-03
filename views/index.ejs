@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Home</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/fees.css">
+	<link rel="stylesheet" type="text/css" href="css/navbar.css">
+<!--===============================================================================================-->
+</head>
+
+
+
+
+
+
+<header>
+  <nav>
+    <div id="nav-wrapper">
+      <div class="brand">
+        <a href="/">API</a>
+			</div>
+			<ul>
+				<% if (user != undefined) { %>
+					<li>
+							<a href="/logout">Logout</a>
+						</li>
+				<% } %>
+      </ul>
+			<% if(user === undefined){ %>
+				<ul>
+					<li>
+						
+					</li>
+				</ul>
+			<% } else{ %>  
+				<% if (user.local.email != null) { %>
+					<ul>
+						<li>
+							<a href=""><%= user.local.email %></a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<img src="https://avatars.io/gravatar/<%= user.local.email %>/140" class="img-circle"><br>
+						</li>
+					</ul>
+				<% } %>
+			<% } %>
+    </div>
+  </nav>
+</header>
+
+
+<body>
+	<div class="container-table100">
+			<div class="container-fee">
+				<div class="login-page"> 
+						<div class="form">
+							<h1>WP API Home Screen</h1><br>
+							<% if(user !== undefined){ %>
+								<a  href="/users/0"><button class="btn-2">Users</button></a><br>
+								<% } else{ %>  
+								<a  href="/login"><button class="btn-2">LOGIN</button></a>
+
+									<!-- <a  href="/signup"><button class="btn-2">SignUp</button></a> -->
+								<% } %>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

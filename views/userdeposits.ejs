@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<% include ./partials/imports3 %>
+<% include ./partials/head %>
+<title>Deposits</title>
+
+<body>
+	
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="">
+					<table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column2">Date</th>
+								<th class="column2">Transaction ID</th>
+								<th class="column2">Wallet</th>
+                <th class="column2">Currency</th>
+								<th class="column2">Amount</th>
+                <th class="column2">PaymentStatus</th>
+							</tr>
+						</thead>
+						<tbody>
+								<% for(var i=0; i < deposits.length; i++) { %>
+										<tr>
+                      <td><a><%= deposits[i].date %></a></td>
+											<td><a><%= deposits[i]._id %></a></td>
+                      <td><a href="https://live.blockcypher.com/btc/address/<%= deposits[i].wallet %>"><%= deposits[i].wallet %></a></td>
+                      <td><a><%= deposits[i].currency %></a></td>
+											<td><a><%= deposits[i].amount %></a></td>
+                      <td><a href="/changedeposit/<%=deposits[i]._id %>"><%= deposits[i].paymentStatus === 0 ? "Waiting" : "Received" %></a></td>
+										</tr>
+								<% } %>
+						</tbody>
+					</table>
+					<!-- <ul style="margin-top: 10px" class="pagination justify-content-center">
+							<% for(var i=0; i < totalDeposits/60; i++) { %>
+							<li class="page-item"><a class="page-link" href="<%= i %>"><%= i %></a></li>
+							<% } %>
+					</ul> -->
+		
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+</html>
