@@ -40,11 +40,13 @@ var createUser = require('./services/createUser');
 var trackNumber = require('./services/trackNumber');
 var trackedUsers = require('./services/trackedUsers');
 var trackedData = require('./services/trackedData');
+var allNumbers = require('./services/allNumbers');
 
 createUser(app);
 trackNumber(app);
 trackedUsers(app);
 trackedData(app);
+allNumbers(app);
 
 app.use(function(req, res, next) {
   next(createError(404));
