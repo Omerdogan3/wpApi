@@ -16,16 +16,15 @@ module.exports = (app) => {
       dbo.collection("users").updateOne({_id: ObjectId(req.body.userid)}, {
         $addToSet: {trackedNumbers: {phoneNumber, username: req.body.username}}
       },function(err,result){
-        res.send({
-          userid: req.body.userid,
-          phoneNumber: phoneNumber,
-          username: req.body.username,
-          status: 1
+        dbo.collection("trackedUsers").insertOne({_id: req.body.phoneNumber, username: req.body.username, userData: []}, {upsert: true}, function(err,result){
+          res.send({
+            userid: req.body.userid,
+            phoneNumber: phoneNumber,
+            username: req.body.username,
+            status: 1
+          })
         })
       })
-
-
-      
     })
   })
 }
