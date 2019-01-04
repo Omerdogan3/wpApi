@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = require('../config/config').constants.mongoUrl;
-var phoneFormatter = require('phone-formatter');
+// var phoneFormatter = require('phone-formatter');
 
 module.exports = (app) => {
   app.get('/trackedusers/:userid',(req,res, next)=>{  
