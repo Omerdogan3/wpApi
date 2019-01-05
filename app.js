@@ -44,6 +44,7 @@ var allNumbers = require('./services/allNumbers');
 var onlineStatus = require('./services/onlineStatus');
 var userFeed = require('./services/userFeed');
 var getUsers = require('./services/getUsers');
+var deleteAllRecords = require('./services/deleteallRecords');
 
 createUser(app);
 trackNumber(app);
@@ -53,6 +54,7 @@ allNumbers(app);
 onlineStatus(app);
 userFeed(app);
 getUsers(app);
+deleteAllRecords(app);
 
 app.use(function(req, res, next) {
   next(createError(404));
