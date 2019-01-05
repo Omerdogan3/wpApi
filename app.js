@@ -43,6 +43,7 @@ var trackedData = require('./services/trackedData');
 var allNumbers = require('./services/allNumbers');
 var onlineStatus = require('./services/onlineStatus');
 var userFeed = require('./services/userFeed');
+var getUsers = require('./services/getUsers');
 
 createUser(app);
 trackNumber(app);
@@ -51,6 +52,7 @@ trackedData(app);
 allNumbers(app);
 onlineStatus(app);
 userFeed(app);
+getUsers(app);
 
 app.use(function(req, res, next) {
   next(createError(404));
