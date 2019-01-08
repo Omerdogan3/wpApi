@@ -17,8 +17,8 @@ module.exports = (app) => {
       dbo.collection("trackedUsers").aggregate([ { $project : { _id : 1 } }, {$limit: 400}, {$skip: 400 * serverNo} ]).toArray(function(err,allUsers){
         allUsers = allUsers.slice(step * 25, (step + 1) * 25);
         let offlineUsers = _.difference(allUsers.map(el=> el._id), onlineUsers);
-        dbo.collection("trackedUsers").updateMany({ _id: {$in: offlineUsers} }, { $push: { userData : {status: 0, time: moment().format()} } }, function(err,result){
-          dbo.collection("trackedUsers").updateMany({ _id: {$in: onlineUsers} }, { $push: { userData : {status: 1, time: moment().format()} } }, function(err,result){
+        dbo.collection("trackedUsers").updateMany({ _id: {$in: offlineUsers} }, { $push: { userData : {status: 0, time: moment().format()} , $position: 0}}, function(err,result){
+          dbo.collection("trackedUsers").updateMany({ _id: {$in: onlineUsers} }, { $push: { userData : {status: 1, time: moment().format()} , $position: 0}}, function(err,result){
             res.send({
               status: 1
             })

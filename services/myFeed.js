@@ -4,16 +4,18 @@ var url = require('../config/config').constants.mongoUrl;
 var currentApiUrl = require('../config/config').constants.currentApiUrl;
 var axios = require('axios');
 var moment = require('moment');
+var _ = require('lodash');
 
 
 
 module.exports = (app) => {
-  app.get('/myfeed/:userid',(req,res, next)=>{  
+  app.get('/myfeed/:userid/:page',(req,res, next)=>{  
+    let page = parseInt(req.params.page);
     MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
       if (err) throw err;
       var dbo = db.db("wp-api");
 
-      axios.get(currentApiUrl + '/trackedusers/' + req.params.userid).then((trackedusers)=>{
+      axios.get(currentApiUrl + '/trackedusers/' + req.params.userid + '/' + req.params.page).then((trackedusers)=>{
         trackedusers = trackedusers.data.map(el=>el.phoneNumber)
         
         loopUserFeed(trackedusers,res)
@@ -36,9 +38,13 @@ async function loopUserFeed(trackedusers,res) {
   let arr = [];
   for(let i=0; i<trackedusers.length; ++i){
     x = await getUserFeed(trackedusers[i]);
-    arr.push({[trackedusers[i]]: x});
+    x.map(el=> el.phoneNumber = trackedusers[i])
+    arr.push(x);
   }
-  // var x = ;
+  arr = _.flatten(arr)
+  arr = arr.sort((function(b,a){
+    return new Date(a.start) - new Date(b.start);
+  }))
   res.send(arr);
 }
 

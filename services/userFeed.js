@@ -5,7 +5,8 @@ var url = require('../config/config').constants.mongoUrl;
 var moment = require('moment');
 
 module.exports = (app) => {
-  app.get('/userfeed/:phoneNumber',(req,res, next)=>{  
+  app.get('/userfeed/:phoneNumber/:page',(req,res, next)=>{  
+    let page = parseInt(req.params.page);
     MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
       if (err) throw err;
       var dbo = db.db("wp-api");
@@ -17,25 +18,21 @@ module.exports = (app) => {
           let onlineResult = [];
           let onlineInterval = [];
           let girCik = false;
-          for(let i=0; i< result.userData.length; ++i){
-            
+          for(let i=0; i< result.userData.length; ++i){        
             if(result.userData[i].status === 1){
               girCik = false
               onlineInterval.push(result.userData[i])
             }else{
               if(girCik === false){
                 girCik = true;
-                // onlineInterval.push(result.userData[i])
-                console.log(result.userData[i])
               }else{
                 if(onlineInterval.length > 0){
                   onlineResult.push({
-                    start: moment(onlineInterval[0].time).format('lll'),
-                    end: moment(onlineInterval[onlineInterval.length-1].time).format('lll'),
+                    start: moment(onlineInterval[0].time).format('LL') + ' ' + moment(onlineInterval[0].time).format('LTS'),
+                    end: moment(onlineInterval[onlineInterval.length-1].time).format('LL') + ' ' + moment(onlineInterval[onlineInterval.length-1].time).format('LTS'),
                     duration: moment(onlineInterval[onlineInterval.length-1].time).diff(onlineInterval[0].time , "seconds")
                   });
                 }
-                
                 onlineInterval = [];
               }
 
@@ -44,7 +41,11 @@ module.exports = (app) => {
               
             }
           }
-          res.send(onlineResult)
+          
+          res.send(paginate(onlineResult, page))
+    
+
+          
         }
 
         
@@ -53,6 +54,13 @@ module.exports = (app) => {
       })
     })
   })
+}
+
+
+function paginate (array, page_number) {
+  let pageSize = 8;
+  let result = array.slice(page_number * pageSize, (page_number + 1) * pageSize);
+  return {result, isMore: result.length < pageSize ? false : true};
 }
 
 

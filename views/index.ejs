@@ -68,18 +68,38 @@
 
 
 <body>
-	<div class="container-table100">
+	<div class="container-table100" >
 			<div class="container-fee">
 				<div class="login-page"> 
-						<div class="form">
+						<div class="form" >
 							<h1>WP API Home Screen</h1><br>
-							<% if(user !== undefined){ %>
-								<a  href="/users/0"><button class="btn-2">Users</button></a><br>
-								<% } else{ %>  
-								<a  href="/login"><button class="btn-2">LOGIN</button></a>
+								<p class="form" style="margin: 0;">
+									<b>get</b>  /createuser 
+								</p>
+								<p class="form" style="margin: 0">
+									<b>get</b>   /trackedusers/:userid
+								</p>
 
-									<!-- <a  href="/signup"><button class="btn-2">SignUp</button></a> -->
-								<% } %>
+								<p class="form" style="margin: 0">
+									<b>post</b>   /trackNumber  </br>
+									Body Should Be: </br>
+											- userid  </br>
+											- phoneNumber </br>
+											- username 
+								</p>
+								
+								
+								<p class="form" style="margin: 0">
+									<b>get</b>  /userfeed/:phoneNumber/:page
+										"page 0'dan baslar"
+								</p>
+
+								<p class="form" style="margin: 0">
+									<b>get</b> /myfeed/:userid/:page
+								</p>
+								
+
+							
 						</div>
 				</div>
 			</div>
