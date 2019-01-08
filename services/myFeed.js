@@ -15,10 +15,10 @@ module.exports = (app) => {
       if (err) throw err;
       var dbo = db.db("wp-api");
 
-      axios.get(currentApiUrl + '/trackedusers/' + req.params.userid + '/' + req.params.page).then((trackedusers)=>{
+      axios.get(currentApiUrl + '/trackedusers/' + req.params.userid).then((trackedusers)=>{
         trackedusers = trackedusers.data.map(el=>el.phoneNumber)
         
-        loopUserFeed(trackedusers,res)
+        loopUserFeed(trackedusers, res, page)
 
       })
     })
@@ -26,18 +26,18 @@ module.exports = (app) => {
 }
 
 
-function getUserFeed(phoneNumber) { 
-  return new axios.get(currentApiUrl + '/userfeed/' + phoneNumber).then((userData)=>{
-    return (userData.data)
+function getUserFeed(phoneNumber, page) { 
+  console.log(currentApiUrl + '/userfeed/' + phoneNumber + '/' + page)
+  return new axios.get(currentApiUrl + '/userfeed/' + phoneNumber + '/' + page).then((userData)=>{
+    return (userData.data.result)
   })
 }
 
-async function loopUserFeed(trackedusers,res) {
-  // var x = trackedusers.map((el)=> (await getUserFeed("905315069751"))
+async function loopUserFeed(trackedusers, res, page) {
   let x = null;
   let arr = [];
   for(let i=0; i<trackedusers.length; ++i){
-    x = await getUserFeed(trackedusers[i]);
+    x = await getUserFeed(trackedusers[i], page);
     x.map(el=> el.phoneNumber = trackedusers[i])
     arr.push(x);
   }
