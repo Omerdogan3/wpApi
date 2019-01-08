@@ -11,7 +11,11 @@ module.exports = (app) => {
 
 
       dbo.collection("users").findOne({_id: ObjectId(req.params.userid)},function(err,result){
-        res.send(result.trackedNumbers)
+        if(result === null){
+          res.send([])
+        }else{
+          res.send(result.trackedNumbers)
+        }
       })
     })
   })
