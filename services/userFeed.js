@@ -42,10 +42,10 @@ module.exports = (app) => {
             }
           }
           
+          onlineResult = onlineResult.sort((function(b,a){
+            return new Date(a.start) - new Date(b.start);
+          }))
           res.send(paginate(onlineResult, page))
-    
-
-          
         }
 
         
