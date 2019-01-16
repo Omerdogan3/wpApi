@@ -18,11 +18,11 @@ module.exports = (app) => {
           if(err) console.log(err);
           if(result.length>0){
             //o zaman silme
-            res.send(result.map(el=>el._id))
+            res.send({status: 1, result: result.map(el=>el._id)})
           }else{
             //sil
-            dbo.collection("trackedUsers").deleteMany({_id: "905319430517"},function(err,result){
-              res.send({status: 1, detail: result})
+            dbo.collection("trackedUsers").deleteMany({_id: phoneNumber},function(err,result){
+              res.send({status: 1, result: result})
             })
           }
         })
