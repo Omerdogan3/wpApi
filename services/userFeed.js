@@ -28,17 +28,13 @@ module.exports = (app) => {
               }else{
                 if(onlineInterval.length > 0){
                   onlineResult.push({
-                    start: moment(onlineInterval[0].time).format('LL') + ' ' + moment(onlineInterval[0].time).format('LTS'),
-                    end: moment(onlineInterval[onlineInterval.length-1].time).format('LL') + ' ' + moment(onlineInterval[onlineInterval.length-1].time).format('LTS'),
+                    start: moment(onlineInterval[0].time).valueOf(),
+                    end: moment(onlineInterval[onlineInterval.length-1].time).valueOf(),
                     duration: moment(onlineInterval[onlineInterval.length-1].time).diff(onlineInterval[0].time , "seconds")
                   });
                 }
                 onlineInterval = [];
               }
-
-
-              
-              
             }
           }
           

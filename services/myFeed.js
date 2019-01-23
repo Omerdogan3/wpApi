@@ -11,15 +11,13 @@ var _ = require('lodash');
 module.exports = (app) => {
   app.get('/myfeed/:userid/:page',(req,res, next)=>{  
     let page = parseInt(req.params.page);
+    console.log(moment().valueOf())
     MongoClient.connect(url, {useNewUrlParser: true}, function(err, db) {
       if (err) throw err;
       var dbo = db.db("wp-api");
-
       axios.get(currentApiUrl + '/trackedusers/' + req.params.userid).then((trackedusers)=>{
         trackedusers = trackedusers.data.map(el=>el.phoneNumber)
-        
         loopUserFeed(trackedusers, res, page)
-
       })
     })
   })
@@ -27,7 +25,6 @@ module.exports = (app) => {
 
 
 function getUserFeed(phoneNumber, page) { 
-  console.log(currentApiUrl + '/userfeed/' + phoneNumber + '/' + page)
   return new axios.get(currentApiUrl + '/userfeed/' + phoneNumber + '/' + page).then((userData)=>{
     return (userData.data.result)
   })
